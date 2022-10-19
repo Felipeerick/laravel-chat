@@ -31,7 +31,7 @@ class PageController extends Controller
     {
         $this->message->create($request->all());
 
-        return redirect()->route('dashboard')->with('idRequest', $request->id);
+        return redirect("chat?id={$request->to}");
     }
 
     public function destroy($id)

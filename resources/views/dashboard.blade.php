@@ -55,8 +55,8 @@
               @if(!$idRequest)
                 vazio
               @else
-                  @if($message->to == $idRequest)
-                <li class="d-flex justify-content-start mb-4">
+                  @if($message->from == Auth::id())
+                <li class="d-flex justify-content-end mb-4">
                   <div class="card">
                     <div class="card-header d-flex justify-content-between p-3">
                       <p class="fw-bold mb-0">Nome padrão</p>
@@ -69,9 +69,8 @@
                     </div>
                   </div>
                 </li>
-                @endif
-                @if($message->from == Auth::id())
-                  <li class="d-flex justify-content-end mb-4">
+                @else
+                  <li class="d-flex justify-content-start mb-4">
                     <div class="card">
                       <div class="card-header d-flex justify-content-between p-3">
                         <p class="fw-bold mb-0">Nome padrão</p>
@@ -90,7 +89,7 @@
           @if(!$idRequest)
             vazio
           @else
-            <form method="POST" action="{{route('message.store')}}">
+            <form method="get" action="{{route('message.store')}}">
               @csrf
               <li class="bg-white mb-3">
                 <div class="form-outline">
