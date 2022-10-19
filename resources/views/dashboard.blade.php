@@ -26,7 +26,11 @@
                     <button type="submit d-flex">
                         <div class="d-flex flex-row">
                             <div class="pt-1">
-                            <p class="fw-bold mb-0">{{$user->name}}</p>
+                            @if($user->id == $idRequest)
+                              <p class="fw-bold mb-0 text-primary">{{$user->name}}</p>
+                            @else
+                              <p class="fw-bold mb-0">{{$user->name}}</p>
+                            @endif
                             <p class="small text-muted">Hello, Are you there?</p>
                             </div>
                         </div>
@@ -47,44 +51,58 @@
       <div class="col-md-6 col-lg-7 col-xl-8">
 
         <ul class="list-unstyled">
-          <!-- <li class="d-flex justify-content-between mb-4">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Brad Pitt</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua.
-                </p>
-              </div>
-            </div>
-          </li> -->
           @foreach($messages as $message)
-          <li class="d-flex justify-content-between mb-4">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Brad Pitt</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  {{message->content}}
-                </p>
-              </div>
-            </div>
-          </li>
+              @if(!$idRequest)
+                vazio
+              @else
+                  @if($message->to == $idRequest)
+                <li class="d-flex justify-content-start mb-4">
+                  <div class="card">
+                    <div class="card-header d-flex justify-content-between p-3">
+                      <p class="fw-bold mb-0">Nome padrão</p>
+                      <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                    </div>
+                    <div class="card-body">
+                      <p class="mb-0">
+                        {{$message->content}}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+                @endif
+                @if($message->from == Auth::id())
+                  <li class="d-flex justify-content-end mb-4">
+                    <div class="card">
+                      <div class="card-header d-flex justify-content-between p-3">
+                        <p class="fw-bold mb-0">Nome padrão</p>
+                        <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                      </div>
+                      <div class="card-body">
+                        <p class="mb-0">
+                          {{$message->content}}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                @endif
+              @endif
           @endforeach
-          <li class="bg-white mb-3">
-            <div class="form-outline">
-              <textarea class="form-control" id="textAreaExample2" rows="4"></textarea>
-              <label class="form-label" for="textAreaExample2">Message</label>
-            </div>
-          </li>
-          <button type="button" class="btn btn-info btn-rounded float-end">Send</button>
+          @if(!$idRequest)
+            vazio
+          @else
+            <form method="POST" action="{{route('message.store')}}">
+              @csrf
+              <li class="bg-white mb-3">
+                <div class="form-outline">
+                  <input type="hidden" name="from" value="{{ Auth::id() }}">
+                  <input type="hidden" name="to" value="{{ $idRequest }}">
+                  <textarea class="form-control" name="content" id="textAreaExample2" rows="4"></textarea>
+                  <label class="form-label" for="textAreaExample2">Message</label>
+                </div>
+              </li>
+              <button type="submit" class="btn btn-info btn-rounded float-end">Send</button>
+            </form>
+          @endif
         </ul>
       </div>
     </div>

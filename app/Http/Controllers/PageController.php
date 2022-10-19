@@ -17,13 +17,21 @@ class PageController extends Controller
 
     public function index(Request $request)
     {
-       return $this->message->getUsersAndMessages($this->user, $this->message, Auth::user()->id, $request->id = null);
+        $users = $this->user->where('id', '!=', Auth::id())->get();
+
+        $idRequest = $request->id;
+
+        $messages = $this->message->getMessages($this->message, Auth::user()->id, $request->id);
+
+        return view('dashboard', compact('users', 'messages', 'idRequest'));
     }
 
     
     public function store(Request $request)
     {
-        //
+        $this->message->create($request->all());
+
+        return redirect()->route('dashboard')->with('idRequest', $request->id);
     }
 
     public function destroy($id)
