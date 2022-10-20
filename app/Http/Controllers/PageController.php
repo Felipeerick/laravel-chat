@@ -18,8 +18,8 @@ class PageController extends Controller
     public function index(Request $request)
     {
         $users = $this->user->where('id', '!=', Auth::id())->get();
-
-        $idRequest = $request->id;
+        
+        (!$this->user->find($request->id)) ? $idRequest = null :  $idRequest = $request->id;
 
         $messages = $this->message->getMessages($this->message, Auth::user()->id, $request->id);
 
