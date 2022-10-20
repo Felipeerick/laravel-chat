@@ -17,7 +17,7 @@
 
         <div class="card">
           <div class="card-body">
-            @foreach($users as $user)
+            @forelse($users as $user)
             <ul class="list-unstyled mb-0">
               <li class="p-2 border-bottom" style="background-color: #eee;">
                 <form action="{{ route('dashboard') }}" class="d-flex justify-content-center" method="GET">
@@ -31,17 +31,23 @@
                             @else
                               <p class="fw-bold mb-0">{{$user->name}}</p>
                             @endif
-                            <p class="small text-muted">Hello, Are you there?</p>
+                            <p class="small text-muted">mensagens</p>
                             </div>
                         </div>
                         <div class="pt-1">
-                            <p class="small text-muted mb-1">Just now</p>
-                            <span class="badge bg-danger float-end">1</span>
+                          @if($user->read_at == 1)
+                            <p class="small text-muted mb-1">{{ date('d/m/Y H:i', strtotime($user->created_at)) }}</p>
+                            <span class="badge bg-danger float-end">Nova mensagem</span>
+                          @else
+                              <span class="badge float-end">-</span>
+                          @endif
                         </div>
                   </button>
                 </form>
               </li>
-              @endforeach
+              @empty
+              sem usuários
+              @endforelse
             </ul>
           </div>
         </div>
@@ -59,8 +65,8 @@
                 <li class="d-flex justify-content-end mb-4">
                   <div class="card">
                     <div class="card-header d-flex justify-content-between p-3">
-                      <p class="fw-bold mb-0">Nome padrão</p>
-                      <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                      <p class="fw-bold mb-0">{{$message->users->name}}</p>
+                      <p class="text-muted small mb-0"><i class="far fa-clock"></i> {{ date('d/m/Y H:i', strtotime($message->created_at)) }}</p>
                     </div>
                     <div class="card-body">
                       <p class="mb-0">
@@ -73,8 +79,8 @@
                   <li class="d-flex justify-content-start mb-4">
                     <div class="card">
                       <div class="card-header d-flex justify-content-between p-3">
-                        <p class="fw-bold mb-0">Nome padrão</p>
-                        <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+                        <p class="fw-bold mb-0">{{$message->users->name}}</p>
+                        <p class="text-muted small mb-0"><i class="far fa-clock"></i> {{ date('d/m/Y H:i', strtotime($message->created_at)) }}</p>
                       </div>
                       <div class="card-body">
                         <p class="mb-0">

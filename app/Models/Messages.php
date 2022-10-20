@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Messages extends Model
 {
@@ -13,7 +14,8 @@ class Messages extends Model
         'id',
         'content',
         'from',
-        'to'
+        'to',
+        
     ];
     
     public function getMessages($model,$userFrom, $userTo = null){
@@ -32,5 +34,16 @@ class Messages extends Model
                 ]);
             }
         )->orderBy('created_at', 'ASC')->get();
+    }
+
+    public function users(){
+        return $this->belongsTo(User::class, 'from', 'id');
+    }
+
+    public function getLastMessage()
+    {
+       $value = Messages::all('content')->last();
+
+       return $value['content'];
     }
 }

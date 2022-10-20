@@ -17,12 +17,16 @@ class PageController extends Controller
 
     public function index(Request $request)
     {
+        if($request->id) 
+            $this->user->find($request->id)->update(['read_at' => 0]);
+
         $users = $this->user->where('id', '!=', Auth::id())->get();
         
-        (!$this->user->find($request->id)) ? $idRequest = null :  $idRequest = $request->id;
+        (!$this->user->find($request->id)) ? $idRequest = null 
+            :  $idRequest = $request->id;
 
         $messages = $this->message->getMessages($this->message, Auth::user()->id, $request->id);
-
+        
         return view('dashboard', compact('users', 'messages', 'idRequest'));
     }
 
@@ -30,6 +34,8 @@ class PageController extends Controller
     public function store(Request $request)
     {
         $this->message->create($request->all());
+
+        $this->user->find($request->from)->update(['read_at' => 1]);
 
         return redirect("chat?id={$request->to}");
     }
