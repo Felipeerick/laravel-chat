@@ -13,7 +13,7 @@
 
       <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
 
-        <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
+        <h5 class="font-weight-bold mb-3 text-center text-lg-start">Members</h5>
 
         <div class="card">
           <div class="card-body">
@@ -23,7 +23,7 @@
                 <form action="{{ route('dashboard') }}" class="d-flex justify-content-center" method="GET">
                     @csrf
                     <input type="hidden" name="id" value="{{$user->id}}">
-                    <button type="submit d-flex">
+                    <button type="submit">
                         <div class="d-flex flex-row">
                             <div class="pt-1">
                             @if($user->id == $idRequest)

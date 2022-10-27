@@ -1,64 +1,198 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{{asset('assets/images/icons/favicon.ico')}}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{{asset('assets/styles/styles.css')}}" />
+    <title>Register | TalkingApp</title>
+  </head>
+  <body class="registerPage">
+    <header id="header">
+      <div class="header__logo_container">
+        <a href="/">
+          <img
+            class="logo_container__logo"
+            src="{{asset('assets/images/logo.png')}}"
+            alt="Logo which shows a two chat icon and the TalkingApp text"
+          />
+        </a>
+      </div>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+      <nav class="header__navbar">
+        <ul class="header__navbar__list">
+          <li>
+            <a href="/" target="_self">Home</a>
+          </li>
+          <li>
+            <a href="/login" target="_self" rel="next">Login</a>
+          </li>
+          <li>
+            <a href="/register" target="_self" rel="next">Register</a>
+          </li>
+        </ul>
+        <img
+          class="header__navbar__responsive_burger_menu"
+          src="{{asset('assets/images/responsive_burger_menu.png')}}"
+          alt="Responsive Burger Bars"
+        />
+      </nav>
 
-            <!-- Name -->
-            <div>
-                <x-input-label for="name" :value="__('Name')" />
+      <nav class="responsive_navbar hide">
+        <div role="button" class="close_navbar_container">
+          <div class="close_bar_axis" id="leftAxis"></div>
+          <div class="close_bar_axis" id="rightAxis"></div>
+        </div>
 
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+        <img
+          src="{{asset('assets/images/logo.png')}}"
+          alt="Logo which shows a two chat icon and the TalkingApp text"
+        />
 
-                <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
+        <ul class="responsive_navbar__list">
+          <li>
+            <a
+              href="/"
+              target="_self"
+              rel="prev"
+              
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/login"
+              target="_self"
+              rel="next"
+             
+              >Login</a
+            >
+          </li>
+          <li>
+            <a href="/register" target="_self"
+              >Register</a
+            >
+          </li>
+        </ul>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-input-label for="email" :value="__('Email')" />
+        <p>Felipe Erick & Guilherme Rocha - 2022</p>
+      </nav>
+    </header>
 
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+    <main id="main">
+      <h1>Welcome!</h1>
+      <form id="auth_form" method="POST" action="{{ route('register') }}">
+        @csrf
+        <h2>Register</h2>
 
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
-            </div>
+        <img
+          class="logo_container__logo"
+          src="{{asset('assets/images/logo.png')}}"
+          alt="Logo which shows a two chat icon and the TalkingApp text"
+        />
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" />
+        <div>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Name | Ex: user"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="E-mail | Ex: user@user.com"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password | Ex: 12345678"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            name="password_confirmation"
+            id="password_confirmed"
+            placeholder="Confirm Password | Ex: 12345678"
+            required
+          />
+        </div>
+        <button id="authSubmitButton" type="submit">Register</button>
+        <button id="clearInputsButton" type="reset">
+          <p>Clear Inputs</p>
+          <img
+            src="../assets/images/icons/eraser_icon.png"
+            alt="Eraser Icon used to clear inputs"
+          />
+        </button>
 
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+        <!-- This id refers to the current menu: login / register -->
+        <h3 class="toggleAuthMsgButton">
+          Already a user?
+          <a
+            id="openRegisterMenuButton"
+            href="login.html"
+            target="_self"
+            role="button"
+          >
+            <span>SIGN IN</span>
+          </a>
+        </h3>
+      </form>
+    </main>
 
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
+    <footer id="footer">
+      <p>
+        Made with
+        <img
+          class="heart_icon"
+          src="{{asset('assets/images/icons/heart_icon.png')}}"
+          alt="Heart Icon"
+        />
+        by
+        <strong id="creators">
+          <a
+            class="creators__creator"
+            href="https://github.com/Felipeerick"
+            target="_blank"
+            rel="external"
+            >Felipe Erick</a
+          >
+          &
+          <a
+            class="creators__creator"
+            href="https://github.com/guilhermescr"
+            target="_blank"
+            rel="external"
+            >Guilherme Rocha</a
+          >
+        </strong>
+        - 2022
+      </p>
+      <img
+        class="logo_container__logo"
+        src="{{asset('assets/images/logo.png')}}"
+        alt="Logo which shows a two chat icon and the TalkingApp text"
+      />
+    </footer>
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-primary-button class="ml-4">
-                    {{ __('Register') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    <script src="{{asset('assets/js/scripts.js')}}"></script>
+  </body>
+</html>
