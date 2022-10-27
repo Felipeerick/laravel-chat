@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <link rel="stylesheet" href="{{asset('assets/styles/styles.css')}}" />
+
     <section style="background-color: #eee;">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <div class="container py-5">
@@ -59,7 +61,15 @@
         <ul class="list-unstyled">
           @foreach($messages as $message)
               @if(!$idRequest)
-                vazio
+              <section class="chat">
+                  <div class="start_chatting_container">
+                  <h4>Choose a contact and start chatting!</h4>
+                  <img
+                    src="{{asset('assets/images/speech_balloon.png')}}"
+                    alt="Speech Balloon"
+                  />
+                  </div>
+              </section>
               @else
                   @if($message->from == Auth::id())
                 <li class="d-flex justify-content-end mb-4">
@@ -93,7 +103,15 @@
               @endif
           @endforeach
           @if(!$idRequest)
-            vazio
+            <section class="chat">
+                  <div class="start_chatting_container">
+                  <h4>Choose a contact and start chatting!</h4>
+                  <img
+                    src="{{asset('assets/images/speech_balloon.png')}}"
+                    alt="Speech Balloon"
+                  />
+                  </div>
+            </section>
           @else
             <form method="get" action="{{route('message.store')}}">
               @csrf

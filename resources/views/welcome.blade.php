@@ -65,7 +65,7 @@
             </li>
             <li>
               <a
-                href="pages/login.html"
+                href="/login"
                 target="_self"
                 rel="next"
               
